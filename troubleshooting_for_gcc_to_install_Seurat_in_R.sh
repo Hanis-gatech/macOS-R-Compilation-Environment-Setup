@@ -35,17 +35,16 @@ mkdir -p ~/.R && nano ~/.R/Makevars #opens a new file for the text editor
 
 # paste the following code in the editor
 
-BREW_PREFIX := $(shell brew --prefix) #picks the prefix automatically
-
 # Replace '15' with your installed GCC version (basically the output of (ls $(brew --prefix)/bin/gcc-* # finds the version of gcc)
+BREW_PREFIX := $(shell brew --prefix)
+
+# Compilers
 CC=$(BREW_PREFIX)/bin/gcc-15
 CXX=$(BREW_PREFIX)/bin/g++-15
-
-# Fortran Compilers
 FC=$(BREW_PREFIX)/bin/gfortran
 F77=$(BREW_PREFIX)/bin/gfortran
 
-# Flags to find Homebrew-installed libraries and headers
+# Flags to find Homebrew libraries and headers
 LDFLAGS=-L$(BREW_PREFIX)/lib
 CPPFLAGS=-I$(BREW_PREFIX)/include
 
