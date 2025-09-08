@@ -1,0 +1,36 @@
+# the previous 2 iterations ended up throwing errors
+# Here we have three sets of instructions.
+
+# 1) download gfortran
+# 2) for your terminal in mac#
+# 3) for R console
+
+# before we start, you need to install from https://mac.r-project.org/tools/gfortran-14.2-universal.pkg
+
+# in your terminal 
+
+sudo installer -pkg "/Users/hira/Downloads/gfortran-14.2-universal.pkg" -target /
+echo 'export PATH="/usr/local/gfortran/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+gfortran --version # confirm installation and integration in bash
+
+
+# in your R terminal
+
+options(Ncpus = max(1, parallel::detectCores() - 1))
+
+suppressWarnings(remove.packages(c("Seurat","RcppAnnoy","uwot","RcppEigen","RcppParallel","Matrix")))
+
+# Conservative flags to avoid CPU instruction issues
+Sys.setenv(CXXFLAGS  = "-O2 -fPIC -march=x86-64 -mtune=generic -mno-avx -mno-avx2")
+Sys.setenv(CXX11FLAGS = Sys.getenv("CXXFLAGS"))
+Sys.setenv(CXX14FLAGS = Sys.getenv("CXXFLAGS"))
+Sys.setenv(CXX17FLAGS = Sys.getenv("CXXFLAGS"))
+
+install.packages(c("Rcpp","RcppEigen","RcppParallel","Matrix"), type = "source")
+install.packages("RcppAnnoy")
+install.packages("uwot")
+install.packages("Seurat", version = "4.3.0.1")
+
+
+
